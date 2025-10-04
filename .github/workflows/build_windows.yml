@@ -55,7 +55,7 @@ jobs:
         echo echo Starting Invariant... >> Invariant_Portable\run.bat
         echo echo. >> Invariant_Portable\run.bat
         echo Invariant.exe >> Invariant_Portable\run.bat
-        echo if %%errorLevel%% neq 0 ( >> Invariant_Portable\run.bat
+        echo if %errorLevel% neq 0 ( >> Invariant_Portable\run.bat
         echo     echo. >> Invariant_Portable\run.bat
         echo     echo Error: Failed to start Invariant >> Invariant_Portable\run.bat
         echo     pause >> Invariant_Portable\run.bat
@@ -75,7 +75,7 @@ jobs:
         echo if not exist "C:\Invariant" mkdir "C:\Invariant" >> install.bat
         echo copy "Invariant.exe" "C:\Invariant\Invariant.exe" >> install.bat
         echo echo Creating desktop shortcut... >> install.bat
-        echo powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%%USERPROFILE%%\Desktop\Invariant.lnk'); $Shortcut.TargetPath = 'C:\Invariant\Invariant.exe'; $Shortcut.WorkingDirectory = 'C:\Invariant'; $Shortcut.Save()" >> install.bat
+        echo powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%USERPROFILE%\Desktop\Invariant.lnk'); $Shortcut.TargetPath = 'C:\Invariant\Invariant.exe'; $Shortcut.WorkingDirectory = 'C:\Invariant'; $Shortcut.Save()" >> install.bat
         echo echo. >> install.bat
         echo echo ✅ Installation complete! >> install.bat
         echo echo. >> install.bat
