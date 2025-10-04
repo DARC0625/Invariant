@@ -38,7 +38,7 @@ jobs:
     
     - name: Build Windows EXE
       run: |
-        pyinstaller --onefile --windowed --name Invariant --distpath dist --add-data "src;." --hidden-import PyQt5 --hidden-import PyQt5.QtCore --hidden-import PyQt5.QtWidgets --hidden-import PyQt5.QtGui --hidden-import Invariant_Cyberpunk invariant.py
+        pyinstaller --onefile --console --name Invariant --distpath dist --add-data "src;." --hidden-import PyQt5 --hidden-import PyQt5.QtCore --hidden-import PyQt5.QtWidgets --hidden-import PyQt5.QtGui --hidden-import Invariant_Cyberpunk invariant.py
     
     - name: Create Portable Package
       run: |
