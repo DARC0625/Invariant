@@ -231,3 +231,4 @@ Future<SystemSpec> _probeLinux() async {
 
   return SystemSpec(cpu: cpu, memory: memory, disks: disks);
 }
+
