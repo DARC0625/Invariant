@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ^3.9.2
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,39 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  
-  # System monitoring and utilities
-  system_info: ^1.0.1
-  http: ^1.1.0
-  provider: ^6.1.1
-  
-  # Cutting-edge UI and Animation
-  flutter_animate: ^4.5.0
-  lottie: ^3.1.2
-  rive: ^0.13.1
-  fl_chart: ^0.68.0
-  google_fonts: ^6.2.1
-  flutter_svg: ^2.0.10+1
-  flutter_staggered_animations: ^1.1.1
-  shimmer: ^3.0.0
-  
-  # Advanced Visual Effects
-  glassmorphism: ^3.0.0
-  flutter_neumorphic: ^3.2.0
-  flutter_glow: ^0.3.2
-  animated_text_kit: ^4.2.2
-  
-  # Professional Charts and Data Visualization
-  # syncfusion_flutter_charts: ^24.1.41
-  # syncfusion_flutter_gauges: ^24.1.41
-  
-  # Modern State Management
-  riverpod: ^2.4.9
-  flutter_riverpod: ^2.4.9
-  
-  # Advanced Animations
-  simple_animations: ^5.0.2
-  supercharged: ^2.1.1
+  system_info_plus: ^0.0.6
+  system_info2: ^4.1.0
 
 dev_dependencies:
   flutter_test:
