@@ -24,6 +24,7 @@ wheels/
 venv/
 env/
 ENV/
+invariant_env/
 
 # IDE
 .vscode/
@@ -36,14 +37,17 @@ ENV/
 Thumbs.db
 
 # Project specific
-temp/
+build/
+dist/
 *.zip
+*.exe
 launcher_config.json
-master_config.json
+invariant_config.json
+
+# Android SDK
+android-sdk/
+jdk-*/
+openjdk-*/
 
 # Logs
 *.log
-
-# Backup files
-*.backup
-*.bak
