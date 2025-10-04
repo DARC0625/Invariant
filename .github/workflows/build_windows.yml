@@ -45,12 +45,7 @@ jobs:
         if (Test-Path Invariant_Portable) { Remove-Item -Recurse -Force Invariant_Portable }
         New-Item -ItemType Directory -Name Invariant_Portable
         Copy-Item dist\Invariant.exe Invariant_Portable\
-        Copy-Item version.json Invariant_Portable\
-        Copy-Item requirements.txt Invariant_Portable\
-        Copy-Item docs\README.md Invariant_Portable\
-        Copy-Item INSTALL_GUIDE.md Invariant_Portable\
         Copy-Item debug_windows.py Invariant_Portable\
-        Set-Content -Path Invariant_Portable\run.bat -Value "@echo off`ntitle Invariant - Master Project Hub`necho.`necho ========================================`necho    Invariant - Master Project Hub`necho ========================================`necho.`necho Starting Invariant...`necho.`nInvariant.exe`npause"
         Set-Content -Path Invariant_Portable\debug.bat -Value "@echo off`ntitle Invariant Debug`necho.`necho ========================================`necho    Invariant Debug Script`necho ========================================`necho.`necho Running debug script...`necho.`npython debug_windows.py`npause"
     
     
@@ -86,7 +81,7 @@ jobs:
           ### 실행 방법
           1. `Invariant_Portable` 폴더를 다운로드
           2. `Invariant.exe` 더블클릭으로 실행
-          3. 또는 `run.bat` 더블클릭으로 실행
+          3. 문제가 있으면 `debug.bat` 실행하여 진단
           
           ### 요구사항
           - Windows 10/11 (64-bit)
