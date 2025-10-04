@@ -1,0 +1,104 @@
+name: Build Windows Flutter App
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+        cache: true
+    
+    - name: Install dependencies
+      run: flutter pub get
+      working-directory: ./invariant_flutter
+    
+    - name: Build Windows app
+      run: flutter build windows --release
+      working-directory: ./invariant_flutter
+    
+    - name: Create portable package
+      run: |
+        if (Test-Path "Invariant_Portable") { Remove-Item -Recurse -Force "Invariant_Portable" }
+        New-Item -ItemType Directory -Name "Invariant_Portable"
+        Copy-Item "invariant_flutter\build\windows\x64\runner\Release\*" "Invariant_Portable\" -Recurse
+        Copy-Item "invariant_flutter\README.md" "Invariant_Portable\"
+        
+        # Create run.bat
+        $runBatContent = @"
+@echo off
+title Invariant - Master Project Hub
+echo.
+echo ========================================
+echo    Invariant - Master Project Hub
+echo ========================================
+echo.
+echo Starting Invariant...
+echo.
+invariant_flutter.exe
+pause
+"@
+        Set-Content -Path "Invariant_Portable\run.bat" -Value $runBatContent
+        
+        # Create version.json
+        $versionContent = @"
+{
+  "version": "1.2.0",
+  "build_date": "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
+  "description": "Cutting-edge Flutter UI with slide navigation and glassmorphism effects",
+  "project_name": "Invariant"
+}
+"@
+        Set-Content -Path "Invariant_Portable\version.json" -Value $versionContent
+    
+    - name: Upload portable package
+      uses: actions/upload-artifact@v4
+      with:
+        name: Invariant_Portable
+        path: Invariant_Portable/
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: Invariant_Portable/*
+        tag_name: v1.2.0
+        name: Invariant v1.2.0
+        body: |
+          # Invariant v1.2.0
+          
+          ## 🚀 Cutting-Edge Flutter UI
+          
+          최신 Flutter 기술로 구현된 미래지향적 UI 시스템
+          
+          ### 주요 기능
+          - 슬라이드 네비게이션 (스크롤 대신)
+          - 글래스모피즘 효과
+          - 실시간 시스템 모니터링
+          - 커스텀 페인터 차트/게이지
+          - Riverpod 상태 관리
+          - 3패널 레이아웃
+          - 애니메이션 효과
+          
+          ### 설치 방법
+          1. `Invariant_Portable` 폴더를 다운로드
+          2. `run.bat` 더블클릭으로 실행
+          3. 또는 `invariant_flutter.exe` 직접 실행
+          
+          ### 요구사항
+          - Windows 10/11 (64-bit)
+          - Visual C++ Redistributable
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
