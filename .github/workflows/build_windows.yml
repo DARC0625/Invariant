@@ -95,7 +95,6 @@ jobs:
         files: |
           Invariant_Portable/*
           install.bat
-          INSTALL_GUIDE.md
         tag_name: v${{ github.run_number }}
         name: Invariant v${{ github.run_number }}
         body: |
