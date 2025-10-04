@@ -40,10 +40,10 @@ jobs:
     - name: Build Windows EXE
       run: |
         # src 폴더의 파일들을 루트로 복사
-        Copy-Item src\Invariant_Dashboard.py .
+        Copy-Item src\Invariant_Command.py .
         Copy-Item src\Project_Template.py .
         # PyInstaller로 EXE 빌드
-        pyinstaller --onefile --console --name Invariant --distpath dist --hidden-import PyQt5 --hidden-import PyQt5.QtCore --hidden-import PyQt5.QtWidgets --hidden-import PyQt5.QtGui --hidden-import psutil --hidden-import Invariant_Dashboard Invariant_Dashboard.py
+        pyinstaller --onefile --console --name Invariant --distpath dist --hidden-import PyQt5 --hidden-import PyQt5.QtCore --hidden-import PyQt5.QtWidgets --hidden-import PyQt5.QtGui --hidden-import psutil --hidden-import Invariant_Command Invariant_Command.py
     
     - name: Create Portable Package
       run: |
