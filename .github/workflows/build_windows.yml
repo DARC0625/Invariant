@@ -51,31 +51,6 @@ jobs:
         Copy-Item INSTALL_GUIDE.md Invariant_Portable\
         Set-Content -Path Invariant_Portable\run.bat -Value "@echo off`ntitle Invariant - Master Project Hub`necho.`necho ========================================`necho    Invariant - Master Project Hub`necho ========================================`necho.`necho Starting Invariant...`necho.`nInvariant.exe`npause"
     
-    - name: Create Installer
-      run: |
-        echo @echo off > install.bat
-        echo title Invariant Installer >> install.bat
-        echo echo. >> install.bat
-        echo echo ======================================== >> install.bat
-        echo echo    Invariant - Master Project Hub >> install.bat
-        echo echo ======================================== >> install.bat
-        echo echo. >> install.bat
-        echo echo Installing Invariant... >> install.bat
-        echo echo. >> install.bat
-        echo if not exist "C:\Invariant" mkdir "C:\Invariant" >> install.bat
-        echo copy "Invariant.exe" "C:\Invariant\Invariant.exe" >> install.bat
-        echo echo Creating desktop shortcut... >> install.bat
-        echo powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%USERPROFILE%\Desktop\Invariant.lnk'); $Shortcut.TargetPath = 'C:\Invariant\Invariant.exe'; $Shortcut.WorkingDirectory = 'C:\Invariant'; $Shortcut.Save()" >> install.bat
-        echo echo. >> install.bat
-        echo echo ✅ Installation complete! >> install.bat
-        echo echo. >> install.bat
-        echo echo Invariant has been installed to C:\Invariant >> install.bat
-        echo echo Desktop shortcut created >> install.bat
-        echo echo. >> install.bat
-        echo echo Press any key to launch Invariant... >> install.bat
-        echo pause ^>nul >> install.bat
-        echo start "" "C:\Invariant\Invariant.exe" >> install.bat
-        echo exit >> install.bat
     
     - name: Upload Portable Package
       uses: actions/upload-artifact@v4
@@ -83,11 +58,6 @@ jobs:
         name: Invariant_Portable_Windows
         path: Invariant_Portable/
     
-    - name: Upload Installer
-      uses: actions/upload-artifact@v4
-      with:
-        name: Invariant_Installer_Windows
-        path: install.bat
     
     - name: Create Release
       if: github.ref == 'refs/heads/main'
@@ -95,7 +65,6 @@ jobs:
       with:
         files: |
           Invariant_Portable/*
-          install.bat
         tag_name: v${{ github.run_number }}
         name: Invariant v${{ github.run_number }}
         body: |
@@ -112,10 +81,10 @@ jobs:
           - 원클릭 실행 및 설치
           - GUI 인터페이스
           
-          ### 설치 방법
+          ### 실행 방법
           1. `Invariant_Portable` 폴더를 다운로드
           2. `Invariant.exe` 더블클릭으로 실행
-          3. 또는 `install.bat` 실행하여 설치
+          3. 또는 `run.bat` 더블클릭으로 실행
           
           ### 요구사항
           - Windows 10/11 (64-bit)
