@@ -39,24 +39,14 @@ jobs:
     
     - name: Create Portable Package
       run: |
-        if exist Invariant_Portable rmdir /s /q Invariant_Portable
-        mkdir Invariant_Portable
-        copy dist\Invariant.exe Invariant_Portable\
-        copy version.json Invariant_Portable\
-        copy requirements.txt Invariant_Portable\
-        copy docs\README.md Invariant_Portable\
-        copy INSTALL_GUIDE.md Invariant_Portable\
-        echo @echo off > Invariant_Portable\run.bat
-        echo title Invariant - Master Project Hub >> Invariant_Portable\run.bat
-        echo echo. >> Invariant_Portable\run.bat
-        echo echo ======================================== >> Invariant_Portable\run.bat
-        echo echo    Invariant - Master Project Hub >> Invariant_Portable\run.bat
-        echo echo ======================================== >> Invariant_Portable\run.bat
-        echo echo. >> Invariant_Portable\run.bat
-        echo echo Starting Invariant... >> Invariant_Portable\run.bat
-        echo echo. >> Invariant_Portable\run.bat
-        echo Invariant.exe >> Invariant_Portable\run.bat
-        echo pause >> Invariant_Portable\run.bat
+        if (Test-Path Invariant_Portable) { Remove-Item -Recurse -Force Invariant_Portable }
+        New-Item -ItemType Directory -Name Invariant_Portable
+        Copy-Item dist\Invariant.exe Invariant_Portable\
+        Copy-Item version.json Invariant_Portable\
+        Copy-Item requirements.txt Invariant_Portable\
+        Copy-Item docs\README.md Invariant_Portable\
+        Copy-Item INSTALL_GUIDE.md Invariant_Portable\
+        Set-Content -Path Invariant_Portable\run.bat -Value "@echo off`ntitle Invariant - Master Project Hub`necho.`necho ========================================`necho    Invariant - Master Project Hub`necho ========================================`necho.`necho Starting Invariant...`necho.`nInvariant.exe`npause"
     
     - name: Create Installer
       run: |
