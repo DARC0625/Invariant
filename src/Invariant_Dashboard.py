@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 Invariant Dashboard - 실시간 모니터링 대시보드
-자동차 계기판 스타일의 직관적 UI
 """
 
 import sys
@@ -28,7 +27,7 @@ from PyQt5.QtGui import (QFont, QPalette, QColor, QIcon, QPixmap, QPainter,
                         QPainterPath)
 
 class SystemMonitor(QThread):
-    """시스템 모니터링 스레드"""
+    """시스템 모니터링"""
     
     data_updated = pyqtSignal(dict)
     
@@ -37,7 +36,7 @@ class SystemMonitor(QThread):
         self.running = True
         
     def run(self):
-        """모니터링 데이터 수집"""
+        """데이터 수집"""
         while self.running:
             try:
                 # CPU 사용률
@@ -101,7 +100,7 @@ class SystemMonitor(QThread):
         self.running = False
 
 class CircularGauge(QWidget):
-    """원형 게이지 위젯"""
+    """원형 게이지"""
     
     def __init__(self, title="", max_value=100, parent=None):
         super().__init__(parent)
@@ -179,7 +178,7 @@ class CircularGauge(QWidget):
         painter.drawText(center.x() - 40, center.y() + 30, self.title)
 
 class LinearGauge(QWidget):
-    """선형 게이지 위젯"""
+    """선형 게이지"""
     
     def __init__(self, title="", max_value=100, parent=None):
         super().__init__(parent)
@@ -239,14 +238,14 @@ class LinearGauge(QWidget):
         painter.drawText(250, 15, f"{int(self.current_value)}%")
 
 class SystemInfoPanel(QWidget):
-    """시스템 정보 패널"""
+    """시스템 정보"""
     
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setup_ui()
         
     def setup_ui(self):
-        """UI 설정"""
+        """UI"""
         layout = QVBoxLayout()
         layout.setSpacing(15)
         layout.setContentsMargins(20, 20, 20, 20)
@@ -311,7 +310,7 @@ class SystemInfoPanel(QWidget):
         """)
 
 class InvariantDashboard(QMainWindow):
-    """Invariant 대시보드 메인 윈도우"""
+    """메인 윈도우"""
     
     def __init__(self):
         super().__init__()
@@ -321,7 +320,7 @@ class InvariantDashboard(QMainWindow):
         self.setup_animations()
         
     def setup_ui(self):
-        """UI 설정"""
+        """UI"""
         self.setWindowTitle("Invariant Dashboard - Real-time Monitoring")
         self.setMinimumSize(1400, 900)
         self.resize(1600, 1000)
@@ -354,7 +353,7 @@ class InvariantDashboard(QMainWindow):
         """)
         
     def setup_monitoring_panel(self, layout):
-        """모니터링 패널 설정"""
+        """모니터링 패널"""
         # 왼쪽 스플리터
         left_splitter = QSplitter(Qt.Vertical)
         
@@ -423,7 +422,7 @@ class InvariantDashboard(QMainWindow):
         layout.addWidget(left_splitter)
         
     def setup_project_panel(self, layout):
-        """프로젝트 관리 패널 설정"""
+        """프로젝트 패널"""
         # 오른쪽 패널
         project_frame = QFrame()
         project_frame.setFixedWidth(400)
@@ -525,7 +524,7 @@ class InvariantDashboard(QMainWindow):
         layout.addWidget(project_frame)
         
     def create_project_cards(self):
-        """프로젝트 카드 생성"""
+        """프로젝트 카드"""
         projects = [
             {"name": "Project 1", "status": "Online", "version": "1.2.0"},
             {"name": "Project 2", "status": "Online", "version": "2.1.0"},
@@ -542,7 +541,7 @@ class InvariantDashboard(QMainWindow):
             self.project_layout.addWidget(card)
             
     def create_project_card(self, project):
-        """프로젝트 카드 생성"""
+        """프로젝트 카드"""
         card = QFrame()
         card.setFixedHeight(80)
         card.setCursor(Qt.PointingHandCursor)
@@ -621,7 +620,7 @@ class InvariantDashboard(QMainWindow):
         return card
         
     def create_button(self, text, color):
-        """버튼 생성"""
+        """버튼"""
         btn = QPushButton(text)
         btn.setFixedSize(80, 40)
         btn.setFont(QFont("Segoe UI", 10, QFont.Bold))
@@ -648,12 +647,12 @@ class InvariantDashboard(QMainWindow):
         return btn
         
     def setup_monitoring(self):
-        """모니터링 설정"""
+        """모니터링"""
         self.monitor.data_updated.connect(self.update_monitoring_data)
         self.monitor.start()
         
     def setup_animations(self):
-        """애니메이션 설정"""
+        """애니메이션"""
         # 윈도우 페이드 인
         self.fade_in = QPropertyAnimation(self, b"windowOpacity")
         self.fade_in.setDuration(1000)
@@ -663,7 +662,7 @@ class InvariantDashboard(QMainWindow):
         self.fade_in.start()
         
     def update_monitoring_data(self, data):
-        """모니터링 데이터 업데이트"""
+        """데이터 업데이트"""
         # 게이지 업데이트
         self.cpu_gauge.set_value(data['cpu_percent'])
         self.memory_gauge.set_value(data['memory_percent'])
@@ -684,7 +683,7 @@ class InvariantDashboard(QMainWindow):
         self.system_info.info_labels['timestamp'].setText(data['timestamp'])
         
     def on_button_click(self, button_text):
-        """버튼 클릭 이벤트"""
+        """버튼 클릭"""
         if button_text == "DEPLOY":
             QMessageBox.information(self, "Deploy", "Deploying selected projects...")
         elif button_text == "UPDATE":
@@ -695,13 +694,13 @@ class InvariantDashboard(QMainWindow):
             QMessageBox.information(self, "Status", "System status: All systems operational")
             
     def closeEvent(self, event):
-        """윈도우 종료 이벤트"""
+        """윈도우 종료"""
         self.monitor.stop()
         self.monitor.wait()
         event.accept()
 
 def main():
-    """메인 함수"""
+    """메인"""
     app = QApplication(sys.argv)
     app.setApplicationName("Invariant Dashboard")
     app.setApplicationVersion("2.0.0")
