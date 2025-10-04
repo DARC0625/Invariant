@@ -37,31 +37,20 @@ jobs:
         Copy-Item "invariant_flutter\README.md" "Invariant_Portable\"
         
         # Create run.bat
-        $runBatContent = @"
-@echo off
-title Invariant - Master Project Hub
-echo.
-echo ========================================
-echo    Invariant - Master Project Hub
-echo ========================================
-echo.
-echo Starting Invariant...
-echo.
-invariant_flutter.exe
-pause
-"@
-        Set-Content -Path "Invariant_Portable\run.bat" -Value $runBatContent
+        echo "@echo off" > "Invariant_Portable\run.bat"
+        echo "title Invariant - Master Project Hub" >> "Invariant_Portable\run.bat"
+        echo "echo." >> "Invariant_Portable\run.bat"
+        echo "echo ========================================" >> "Invariant_Portable\run.bat"
+        echo "echo    Invariant - Master Project Hub" >> "Invariant_Portable\run.bat"
+        echo "echo ========================================" >> "Invariant_Portable\run.bat"
+        echo "echo." >> "Invariant_Portable\run.bat"
+        echo "echo Starting Invariant..." >> "Invariant_Portable\run.bat"
+        echo "echo." >> "Invariant_Portable\run.bat"
+        echo "invariant_flutter.exe" >> "Invariant_Portable\run.bat"
+        echo "pause" >> "Invariant_Portable\run.bat"
         
         # Create version.json
-        $versionContent = @"
-{
-  "version": "1.2.0",
-  "build_date": "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
-  "description": "Cutting-edge Flutter UI with slide navigation and glassmorphism effects",
-  "project_name": "Invariant"
-}
-"@
-        Set-Content -Path "Invariant_Portable\version.json" -Value $versionContent
+        echo "{`"version`": `"1.2.0`", `"build_date`": `"$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')`", `"description`": `"Cutting-edge Flutter UI with slide navigation and glassmorphism effects`", `"project_name`": `"Invariant`"}" > "Invariant_Portable\version.json"
     
     - name: Upload portable package
       uses: actions/upload-artifact@v4
