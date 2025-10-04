@@ -35,7 +35,7 @@ jobs:
     
     - name: Build Windows EXE
       run: |
-        pyinstaller --onefile --windowed --name Invariant --distpath dist --hidden-import tkinter --hidden-import tkinter.ttk --hidden-import tkinter.messagebox --hidden-import tkinter.filedialog src/Invariant_Cyberpunk.py
+        pyinstaller --onefile --windowed --name Invariant --distpath dist --hidden-import tkinter --hidden-import tkinter.ttk --hidden-import tkinter.messagebox --hidden-import tkinter.filedialog invariant.py
     
     - name: Create Portable Package
       run: |
