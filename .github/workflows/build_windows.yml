@@ -23,7 +23,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller
-        pip install tkinter
         pip install requests
         pip install urllib3
         pip install pillow
@@ -36,7 +35,7 @@ jobs:
     
     - name: Build Windows EXE
       run: |
-        pyinstaller --onefile --windowed --name Invariant --distpath dist --hidden-import tkinter --hidden-import tkinter.ttk --hidden-import tkinter.messagebox --hidden-import tkinter.filedialog invariant.py
+        pyinstaller --onefile --windowed --name Invariant --distpath dist --hidden-import tkinter --hidden-import tkinter.ttk --hidden-import tkinter.messagebox --hidden-import tkinter.filedialog src/Invariant_Cyberpunk.py
     
     - name: Create Portable Package
       run: |
@@ -45,6 +44,7 @@ jobs:
         copy version.json Invariant_Portable\
         copy requirements.txt Invariant_Portable\
         copy docs\README.md Invariant_Portable\
+        copy INSTALL_GUIDE.md Invariant_Portable\
         echo @echo off > Invariant_Portable\run.bat
         echo title Invariant - Master Project Hub >> Invariant_Portable\run.bat
         echo echo. >> Invariant_Portable\run.bat
@@ -106,6 +106,7 @@ jobs:
         files: |
           Invariant_Portable/*
           install.bat
+          INSTALL_GUIDE.md
         tag_name: v${{ github.run_number }}
         name: Invariant v${{ github.run_number }}
         body: |
