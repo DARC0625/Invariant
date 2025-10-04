@@ -1,3 +1,13 @@
 tkinter
-urllib3
 requests
+urllib3
+pyinstaller
+pillow
+numpy
+opencv-python
+ultralytics
+psutil
+mss
+pyautogui
+winshell
+pywin32

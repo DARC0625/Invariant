@@ -1,0 +1,125 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
+    
+    - name: Build Windows EXE
+      run: |
+        pyinstaller --onefile --windowed --name Invariant --distpath dist Invariant_Cyberpunk.py
+    
+    - name: Create Portable Package
+      run: |
+        mkdir Invariant_Portable
+        copy dist\Invariant.exe Invariant_Portable\
+        copy version.json Invariant_Portable\
+        copy requirements.txt Invariant_Portable\
+        copy README.md Invariant_Portable\
+        echo @echo off > Invariant_Portable\run.bat
+        echo title Invariant - Master Project Hub >> Invariant_Portable\run.bat
+        echo echo. >> Invariant_Portable\run.bat
+        echo echo ======================================== >> Invariant_Portable\run.bat
+        echo echo    Invariant - Master Project Hub >> Invariant_Portable\run.bat
+        echo echo ======================================== >> Invariant_Portable\run.bat
+        echo echo. >> Invariant_Portable\run.bat
+        echo echo Starting Invariant... >> Invariant_Portable\run.bat
+        echo echo. >> Invariant_Portable\run.bat
+        echo Invariant.exe >> Invariant_Portable\run.bat
+        echo if %%errorLevel%% neq 0 ( >> Invariant_Portable\run.bat
+        echo     echo. >> Invariant_Portable\run.bat
+        echo     echo Error: Failed to start Invariant >> Invariant_Portable\run.bat
+        echo     pause >> Invariant_Portable\run.bat
+        echo ^) >> Invariant_Portable\run.bat
+    
+    - name: Create Installer
+      run: |
+        echo @echo off > install.bat
+        echo title Invariant Installer >> install.bat
+        echo echo. >> install.bat
+        echo echo ======================================== >> install.bat
+        echo echo    Invariant - Master Project Hub >> install.bat
+        echo echo ======================================== >> install.bat
+        echo echo. >> install.bat
+        echo echo Installing Invariant... >> install.bat
+        echo echo. >> install.bat
+        echo if not exist "C:\Invariant" mkdir "C:\Invariant" >> install.bat
+        echo copy "Invariant.exe" "C:\Invariant\Invariant.exe" >> install.bat
+        echo echo Creating desktop shortcut... >> install.bat
+        echo powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%%USERPROFILE%%\Desktop\Invariant.lnk'); $Shortcut.TargetPath = 'C:\Invariant\Invariant.exe'; $Shortcut.WorkingDirectory = 'C:\Invariant'; $Shortcut.Save()" >> install.bat
+        echo echo. >> install.bat
+        echo echo ✅ Installation complete! >> install.bat
+        echo echo. >> install.bat
+        echo echo Invariant has been installed to C:\Invariant >> install.bat
+        echo echo Desktop shortcut created >> install.bat
+        echo echo. >> install.bat
+        echo echo Press any key to launch Invariant... >> install.bat
+        echo pause ^>nul >> install.bat
+        echo start "" "C:\Invariant\Invariant.exe" >> install.bat
+        echo exit >> install.bat
+    
+    - name: Upload Portable Package
+      uses: actions/upload-artifact@v3
+      with:
+        name: Invariant_Portable_Windows
+        path: Invariant_Portable/
+    
+    - name: Upload Installer
+      uses: actions/upload-artifact@v3
+      with:
+        name: Invariant_Installer_Windows
+        path: install.bat
+    
+    - name: Create Release
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          Invariant_Portable/*
+          install.bat
+        tag_name: v${{ github.run_number }}
+        name: Invariant v${{ github.run_number }}
+        body: |
+          # Invariant v${{ github.run_number }}
+          
+          ## 🚀 Master Project Hub
+          
+          모든 프로젝트들을 통합 관리하는 메인 허브 시스템
+          
+          ### 주요 기능
+          - 통합 프로젝트 관리
+          - GitHub 기반 자동 업데이트  
+          - 버전 관리 (안정화/베타)
+          - 원클릭 실행 및 설치
+          - GUI 인터페이스
+          
+          ### 설치 방법
+          1. `Invariant_Portable` 폴더를 다운로드
+          2. `Invariant.exe` 더블클릭으로 실행
+          3. 또는 `install.bat` 실행하여 설치
+          
+          ### 요구사항
+          - Windows 10/11 (64-bit)
+          - Python 설치 불필요
+        draft: false
+        prerelease: false
