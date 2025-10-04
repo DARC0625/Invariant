@@ -22,12 +22,17 @@ jobs:
         cache: true
     
     - name: Install dependencies
-      run: flutter pub get
-      working-directory: ./invariant_flutter
+      run: |
+        ls -la
+        cd invariant_flutter
+        pwd
+        ls -la
+        flutter pub get
     
     - name: Build Windows app
-      run: flutter build windows --release --target lib/main.dart
-      working-directory: ./invariant_flutter
+      run: |
+        cd invariant_flutter
+        flutter build windows --release
     
     - name: Create portable package
       run: |
