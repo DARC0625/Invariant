@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "build_date": "2024-10-04",
+  "description": "Invariant - 모든 프로젝트들의 통합 관리 시스템",
+  "features": [
+    "통합 프로젝트 관리",
+    "GitHub 기반 자동 업데이트",
+    "버전 관리 (안정화/베타)",
+    "원클릭 실행 및 설치",
+    "GUI 인터페이스"
+  ],
+  "managed_projects": [
+    "Project1",
+    "Project2", 
+    "Project3",
+    "Project4_AI_Agent"
+  ]
+}
