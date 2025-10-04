@@ -39,6 +39,7 @@ jobs:
     
     - name: Create Portable Package
       run: |
+        if exist Invariant_Portable rmdir /s /q Invariant_Portable
         mkdir Invariant_Portable
         copy dist\Invariant.exe Invariant_Portable\
         copy version.json Invariant_Portable\
