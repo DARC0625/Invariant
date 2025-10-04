@@ -38,7 +38,11 @@ jobs:
     
     - name: Build Windows EXE
       run: |
-        pyinstaller --onefile --console --name Invariant --distpath dist --add-data "src;." --hidden-import PyQt5 --hidden-import PyQt5.QtCore --hidden-import PyQt5.QtWidgets --hidden-import PyQt5.QtGui --hidden-import Invariant_Cyberpunk invariant.py
+        # src 폴더의 파일들을 루트로 복사
+        Copy-Item src\Invariant_Cyberpunk.py .
+        Copy-Item src\Project_Template.py .
+        # PyInstaller로 EXE 빌드
+        pyinstaller --onefile --console --name Invariant --distpath dist --hidden-import PyQt5 --hidden-import PyQt5.QtCore --hidden-import PyQt5.QtWidgets --hidden-import PyQt5.QtGui --hidden-import Invariant_Cyberpunk Invariant_Cyberpunk.py
     
     - name: Create Portable Package
       run: |
