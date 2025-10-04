@@ -49,7 +49,9 @@ jobs:
         Copy-Item requirements.txt Invariant_Portable\
         Copy-Item docs\README.md Invariant_Portable\
         Copy-Item INSTALL_GUIDE.md Invariant_Portable\
+        Copy-Item debug_windows.py Invariant_Portable\
         Set-Content -Path Invariant_Portable\run.bat -Value "@echo off`ntitle Invariant - Master Project Hub`necho.`necho ========================================`necho    Invariant - Master Project Hub`necho ========================================`necho.`necho Starting Invariant...`necho.`nInvariant.exe`npause"
+        Set-Content -Path Invariant_Portable\debug.bat -Value "@echo off`ntitle Invariant Debug`necho.`necho ========================================`necho    Invariant Debug Script`necho ========================================`necho.`necho Running debug script...`necho.`npython debug_windows.py`npause"
     
     
     - name: Upload Portable Package

@@ -13,11 +13,10 @@ project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root / "src"))
 
 try:
-    from Invariant_Cyberpunk import InvariantCyberpunk
+    from Invariant_Cyberpunk import main
     
     if __name__ == "__main__":
-        app = InvariantCyberpunk()
-        app.run()
+        main()
         
 except ImportError as e:
     print(f"❌ Import error: {e}")
