@@ -6,15 +6,21 @@ Invariant Build Script
 import os
 import sys
 import subprocess
+import shutil
 from pathlib import Path
 
 def build_exe():
     """EXE 빌드"""
     print("🔨 Building Invariant EXE...")
     
-    # PyInstaller 명령어
+    # PyInstaller 명령어 (가상환경 사용)
+    venv_python = Path("build_env/bin/python3")
+    if not venv_python.exists():
+        print("❌ Virtual environment not found. Please run: python3 -m venv build_env && source build_env/bin/activate && pip install pyinstaller")
+        return False
+    
     cmd = [
-        sys.executable, "-m", "PyInstaller",
+        str(venv_python), "-m", "PyInstaller",
         "--onefile",
         "--windowed", 
         "--name", "Invariant",

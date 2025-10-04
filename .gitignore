@@ -24,7 +24,7 @@ wheels/
 venv/
 env/
 ENV/
-invariant_env/
+build_env/
 
 # IDE
 .vscode/
