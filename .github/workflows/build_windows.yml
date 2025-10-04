@@ -23,10 +23,10 @@ jobs:
     
     - name: Install dependencies
       run: |
-        ls -la
+        Get-ChildItem
         cd invariant_flutter
-        pwd
-        ls -la
+        Get-Location
+        Get-ChildItem
         flutter pub get
     
     - name: Build Windows app
