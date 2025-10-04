@@ -11,6 +11,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!invariant_flutter/lib/
 lib64/
 parts/
 sdist/
